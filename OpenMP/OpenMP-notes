@@ -1,0 +1,19 @@
+Talking points and notes for OpenMP
+
+A mentioned before, OpenMP is a way to parallelize programs for running onto shared memory machines, i.e. machines where all the processing cores can see and access the same memory. This has a few advantages, not just because it is usually faster than using distributed memory machines, but in my opinion the biggest advantage is how easy it is to implement. Also updating code that has been written (long) before can often be parallelized with relative easy.
+
+It should be noted that OpenMP is not a programming language, so there is also no such thing as an OpenMP-compiler. OpenMP, for which the standard is open source and anybody can help in its development, is a set of library functions, defined in the header <omp.h> and a runtime system. It is also described as an API.
+
+for this workshop, we will use C++ as our language of choice. We will also try to adhere to the best practices of using modern C++, but in all but the easiest examples this is actually quite difficult. High performance computing is a slow moving field, so many examples online use an outdated way of writing C++ code. It should be noted that the same syntax we will show here today, is also valid for classical C programs. There is also a Fortran implementation for OpenMP, but this uses a different syntax for the pragmas, but of course similar concepts.
+
+As a classical first example, we will start by writing a basic variation of the "Hello World" program. In essence, we want to utilize all of our threads to print out the same message
+
+In the following sections, we will consider some more 'real-life' examples, like matrix operations, 1D numerical integration and in the end we're going to make pretty pictures by calculating the Mandlebrot set. It is important to notice that these are all programs that fall under the class of embarasingly parallel programs. This means, in essence, that they are trivially to parallelize and that we will also get very good scaling. This is because there is no data shared between the threads.
+
+As a second example, we will look how to parallelize a basic dense matrix matrix multiplication algorithm. Here we can already see the power of using OpenMP, but also that it can be dangerous to use. If you put OpenMP pragma at the wrong place, you will see a performance degradation? Can you think of a reason why this happens?
+
+As a third example we will look at some basic numerical integrations algorithms, and see how they can be easily parallelized using OpenMP.
+
+As an anti-example, we will look at a Runge-Kutta scheme, where it is very difficult to extract parallelism at the obvious level.
+
+Lastly, we will look at a SpMV operation, as a precursor to the MPI session next. Like the programs before, it is very easy to parallelize a SpMV operation and in general we get good performance. But there is a problem, because in real life examples, sparse matrices are often much bigger than the memory available
